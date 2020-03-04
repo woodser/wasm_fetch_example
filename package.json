@@ -1,0 +1,52 @@
+{
+  "name": "wasm_fetch_example",
+  "description": "Example of http requests in WebAssembly ",
+  "version": "0.2.5",
+  "license": "MIT",
+  "repository": "https://github.com/woodser/wasm_fetch_example",
+  "private": false,
+  "main": "index.js",
+  "scripts": {
+    "start": "todo",
+    "build": "webpack",
+    "test": "node --experimental-wasm-threads --experimental-wasm-bulk-memory node_modules/mocha/bin/_mocha 'src/test/TestAll' --timeout 3000000 --exit"
+  },
+  "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "woodser",
+        "repo": "wasm_fetch_example"
+      }
+    ]
+  },
+  "engines": {
+    "node": "7.4.0"
+  },
+  "dependencies": {
+    "ajv": "^6.10.2",
+    "async": "2.6.1",
+    "html5-fs": "0.1.1",
+    "mocha": "^5.2.0",
+    "net": "^1.0.2",
+    "promise-throttle": "^1.0.1",
+    "request": "2.88.0",
+    "request-promise": "^4.2.5",
+    "serialize-javascript": "^2.1.2",
+    "text-encoding": "^0.7.0",
+    "tls": "0.0.1",
+    "uuid": "3.3.2"
+  },
+  "devDependencies": {
+    "babel-core": "6.26.3",
+    "babel-loader": "8.0.2",
+    "babel-minify": "0.4.3",
+    "electron": "3.0.3",
+    "eslint": "5.6.0",
+    "memfs": "^3.0.4",
+    "webpack": "^4.41.3",
+    "webpack-cli": "3.1.0",
+    "webpack-merge": "4.1.4",
+    "worker-loader": "2.0.0"
+  }
+}
