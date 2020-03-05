@@ -4,6 +4,7 @@
 class WasmApp {
   
   constructor() {
+    
   }
   
   /**
@@ -34,21 +35,17 @@ class WasmApp {
    * The goal is for the C++ in the module to catch and return the error, but it does not.
    */
   async invokeRequestThenError() {
-    
-    // sync wallet
     return new Promise(function(resolve, reject) {
     
       // define callback for wasm
       let callbackFn = async function(resp) {
-        console.log("GOT RESPONSE FROM ERROR INVOCATION");
-        console.log(resp);
-        reject(new Error("Not implemented!!"));
+        console.log("Callback called!!!");
+        reject(new Error("TODO: handle callback with response " + resp));
       }
       
       // sync wallet in wasm and invoke callback when done
       try {
-        console.log("invoking_request...");
-        WasmApp.WASM_MODULE.invoke_request_then_error(callbackFn);
+        WasmApp.WASM_MODULE.invoke_async_js_then_error(callbackFn);
       } catch (e) {
         console.log("JS caught error:");
         console.log(e);

@@ -8,7 +8,7 @@
 EMSCRIPTEN_BINDINGS(module)
 {
   emscripten::function("get_hello", &wasm_bridge::get_hello);
-  emscripten::function("invoke_request_then_error", &wasm_bridge::invoke_request_then_error);
+  emscripten::function("invoke_async_js_then_error", &wasm_bridge::invoke_async_js_then_error);
 }
 extern "C"
 {

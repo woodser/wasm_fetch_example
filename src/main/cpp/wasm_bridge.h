@@ -13,7 +13,7 @@ using namespace emscripten;
 namespace wasm_bridge
 {
   string get_hello();
-  void invoke_request_then_error(emscripten::val callback);
+  void invoke_async_js_then_error(emscripten::val callback);
 }
 
 #endif /* wasm_bridge_h */

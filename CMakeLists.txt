@@ -33,8 +33,6 @@ set(
 #-s PTHREAD_POOL_SIZE=2 \
 #-s PROXY_TO_PTHREAD \
 #-s DISABLE_EXCEPTION_CATCHING=0 \
-#-s ASYNCIFY=1 \
-#-s 'ASYNCIFY_IMPORTS=[\"js_send_json_request\",\"js_send_binary_request\",\"emscripten_sleep\"]' \
 
 set (
 EMCC_LINKER_FLAGS_BASE
@@ -62,7 +60,7 @@ EMCC_LINKER_FLAGS_BASE
 -s ALLOW_MEMORY_GROWTH=0 \
 -s TOTAL_MEMORY=512MB \
 -s ASYNCIFY=1 \
--s ASYNCIFY_IMPORTS='[\"js_send_json_request\",\"js_send_binary_request\",\"emscripten_sleep\"]' \
+-s ASYNCIFY_IMPORTS='[\"async_js\",\"emscripten_sleep\"]' \
 --post-js ${CMAKE_CURRENT_LIST_DIR}/src/main/js/module-post.js \
 "
     # • Disabling exception catching does not introduce silent failures 
