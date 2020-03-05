@@ -47,7 +47,7 @@ class WasmApp {
       try {
         WasmApp.WASM_MODULE.invoke_async_js_then_error(callbackFn);
       } catch (e) {
-        console.log("JS caught error:");
+        console.log("JS caught error!!!");
         console.log(e);
         throw new Error(e);
       }
