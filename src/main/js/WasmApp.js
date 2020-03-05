@@ -3,11 +3,20 @@
  */
 class WasmApp {
   
+  constructor() {
+  }
+  
   /**
    * Load the web assembly module.
    */
   async loadWasmModule() {
-    throw new Error("Not implemented");
+    
+    // use cache if suitable, core module supersedes keys module because it is superset
+    if (WasmApp.WASM_MODULE) return WasmApp.WASM_MODULE;
+    
+    // load module
+    WasmApp.WASM_MODULE = await require("../../../dist/wasm_app")().ready;
+    return WasmApp.WASM_MODULE;
   }
   
   /**
@@ -16,18 +25,7 @@ class WasmApp {
    * @return {string} "Hello from WASM!"
    */
   async getHello() {
-    throw new Error("Not implemented");
-//    let that = this;
-//    return new Promise(function(resolve, reject) {
-//      
-//      // define callback for wasm
-//      let callbackFn = function(resp) {
-//        resolve(resp);
-//      }
-//      
-//      // sync wallet in wasm and invoke callback when done
-//      that.module.get_height(that.cppAddress, callbackFn);
-//    });
+    return WasmApp.WASM_MODULE.get_hello();
   }
   
   /**
@@ -36,7 +34,27 @@ class WasmApp {
    * The goal is for the C++ in the module to catch and return the error, but it does not.
    */
   async invokeRequestThenError() {
-    throw new Error("Not implemented");
+    
+    // sync wallet
+    return new Promise(function(resolve, reject) {
+    
+      // define callback for wasm
+      let callbackFn = async function(resp) {
+        console.log("GOT RESPONSE FROM ERROR INVOCATION");
+        console.log(resp);
+        reject(new Error("Not implemented!!"));
+      }
+      
+      // sync wallet in wasm and invoke callback when done
+      try {
+        console.log("invoking_request...");
+        WasmApp.WASM_MODULE.invoke_request_then_error(callbackFn);
+      } catch (e) {
+        console.log("JS caught error:");
+        console.log(e);
+        throw new Error(e);
+      }
+    });
   }
 }
 

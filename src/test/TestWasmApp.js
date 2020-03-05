@@ -1,4 +1,6 @@
 const WasmApp = require("../main/js/WasmApp");
+const AppUtils = require("../main/js/AppUtils");
+const assert = require("assert");
 
 /**
  * Test the wasm app.

@@ -1,3 +1,6 @@
 'use strict'
 
-require("./src/main/js/WasmApp");
+/**
+ * Load production models to "this".
+ */
+require("./src/main/js/AppModel")();

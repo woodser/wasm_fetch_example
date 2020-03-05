@@ -11,7 +11,7 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 # C++ bridge
 ##############
 
-include_directories("src/cpp")
+include_directories("src/main/cpp")
 
 ################################
 # Keys-only wallet source files
@@ -52,6 +52,7 @@ EMCC_LINKER_FLAGS_BASE
 -s EXIT_RUNTIME=0 \
 -s PRECISE_F32=1 \
 -s EXCEPTION_DEBUG=1 \
+-s DISABLE_EXCEPTION_CATCHING=0 \
 -s DEMANGLE_SUPPORT=1 \
 -s NO_DYNAMIC_EXECUTION=1 \
 -s NODEJS_CATCH_EXIT=0 \
@@ -60,6 +61,8 @@ EMCC_LINKER_FLAGS_BASE
 -s WASM=1 \
 -s ALLOW_MEMORY_GROWTH=0 \
 -s TOTAL_MEMORY=512MB \
+-s ASYNCIFY=1 \
+-s ASYNCIFY_IMPORTS='[\"js_send_json_request\",\"js_send_binary_request\",\"emscripten_sleep\"]' \
 --post-js ${CMAKE_CURRENT_LIST_DIR}/src/main/js/module-post.js \
 "
     # • Disabling exception catching does not introduce silent failures 
@@ -73,8 +76,6 @@ EMCC_LINKER_FLAGS_BASE
 set(
 EMCC_LINKER_FLAGS_WASM_APP
 "${EMCC_LINKER_FLAGS_BASE} \
--s ASYNCIFY=1 \
--s 'ASYNCIFY_IMPORTS=[\"js_send_json_request\",\"js_send_binary_request\",\"emscripten_sleep\"]' \
 "
 )
 
