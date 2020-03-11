@@ -15,17 +15,28 @@ class TestWasmApp {
         
       });
       
-      it("Can say hello", async function() {
-        let app = new WasmApp();
-        await app.loadWasmModule();
-        assert.equal(await app.getHello(), "Hello from WASM!");
-      });
+//      it("Can say hello", async function() {
+//        let app = new WasmApp();
+//        await app.loadWasmModule();
+//        assert.equal(await app.getHello(), "Hello from WASM!");
+//      });
+//      
+//      it("Can recover from exceptions after http requests", async function() {
+//        let app = new WasmApp();
+//        await app.loadWasmModule();
+//        try {
+//          await app.invokeRequestThenError();
+//          throw new Error("Should have caught error");
+//        } catch (e) {
+//          assert.equal(e.message, "Error caught!");
+//        }
+//      });
       
-      it("Can recover from exceptions after http requests", async function() {
+      it("Can recover from exceptions", async function() {
         let app = new WasmApp();
-        await app.loadWasmModule();
+        await app.loadWasmModule2();
         try {
-          await app.invokeRequestThenError();
+          await app.invokeTryCatch();
           throw new Error("Should have caught error");
         } catch (e) {
           assert.equal(e.message, "Error caught!");

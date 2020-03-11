@@ -40,35 +40,13 @@ EMCC_LINKER_FLAGS_BASE
 # unsure if the -I...boost..include is necessary here due to include above
 # TODO? does EXPORT_NAME need to be the same for both targets? (or should it be set per-target with …_WASM, …_ASMJS?)
 
-"-Wall -std=c++11 \
---bind -s MODULARIZE=1 \
--Oz \
+"--bind \
+-s MODULARIZE=1 \
 -s 'EXPORT_NAME=\"wasm_app\"' \
---llvm-lto 1 \
--s ERROR_ON_UNDEFINED_SYMBOLS=0 \
--s ASSERTIONS=2 \
--s EXIT_RUNTIME=0 \
--s PRECISE_F32=1 \
--s EXCEPTION_DEBUG=1 \
 -s DISABLE_EXCEPTION_CATCHING=0 \
--s DEMANGLE_SUPPORT=1 \
--s NO_DYNAMIC_EXECUTION=1 \
--s NODEJS_CATCH_EXIT=0 \
--s RESERVED_FUNCTION_POINTERS=5 \
--s EXTRA_EXPORTED_RUNTIME_METHODS='[\"UTF8ToString\",\"stringToUTF8\",\"lengthBytesUTF8\",\"intArrayToString\",\"makeBigInt\",\"getTempRet0\",\"addFunction\"]' \
 -s WASM=1 \
--s ALLOW_MEMORY_GROWTH=0 \
--s TOTAL_MEMORY=512MB \
--s ASYNCIFY=1 \
--s ASYNCIFY_IMPORTS='[\"async_js\",\"emscripten_sleep\"]' \
 --post-js ${CMAKE_CURRENT_LIST_DIR}/src/main/js/module-post.js \
 "
-    # • Disabling exception catching does not introduce silent failures 
-    # • Probably don't need PRECISE_F32 but wouldn't want to not use it
-    #
-    #
-    # -s SAFE_HEAP=1 \
-    # -g \
 )
 
 set(
