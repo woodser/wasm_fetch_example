@@ -20,7 +20,7 @@ string wasm_bridge::get_hello() {
 void wasm_bridge::invoke_async_js_then_error(emscripten::val callback) {
 
   // call asynchronous js
-//  async_js();
+  async_js();
 
   // suppose an error happens after
   try {
