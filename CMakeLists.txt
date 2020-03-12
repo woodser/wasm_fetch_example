@@ -2,15 +2,16 @@ cmake_minimum_required(VERSION 3.4.1)
 
 project(wasm-app)
 
+# read exception whitelist from file
+file(STRINGS wasm_exception_whitelist.txt WASM_EXCEPTION_WHITELIST)
+string(REPLACE ";" "," WASM_EXCEPTION_WHITELIST "${WASM_EXCEPTION_WHITELIST}")
+message("WASM_EXCEPTION_WHITELIST: ${WASM_EXCEPTION_WHITELIST}")
+
+# build with exception white list
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 --bind -s DISABLE_EXCEPTION_CATCHING=0")
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 --bind -s DISABLE_EXCEPTION_CATCHING=2 -s EXCEPTION_CATCHING_WHITELIST='[\"_ZN11wasm_bridge26invoke_async_js_then_errorEN10emscripten3valE\",\"stringToUTF8\"]'")
-
-# read exception whitelist from file
-file(READ wasm_exception_whitelist.txt EXCEPTION_CATCHING_WHITELIST_FILE)
-
-# build with exception white list
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 --bind -s DISABLE_EXCEPTION_CATCHING=2 -s EXCEPTION_CATCHING_WHITELIST=${EXCEPTION_CATCHING_WHITELIST_FILE}")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 --bind -s DISABLE_EXCEPTION_CATCHING=2 -s EXCEPTION_CATCHING_WHITELIST='[${WASM_EXCEPTION_WHITELIST}]'")
 
 #find_package(Threads)
 #find_package(Backtrace)
