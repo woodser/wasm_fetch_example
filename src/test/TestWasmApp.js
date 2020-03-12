@@ -34,12 +34,12 @@ class TestWasmApp {
       
       it("Can recover from exceptions", async function() {
         let app = new WasmApp();
-        await app.loadWasmModule2();
+        //await app.loadWasmModule();
         try {
-          await app.invokeTryCatch();
-          throw new Error("Should have caught error");
+          await app.getHello();
+          throw new Error("Should have thrown then caught error");
         } catch (e) {
-          assert.equal(e.message, "Error caught!");
+          if (e.message !== "Error caught!") throw e;
         }
       });
     });
