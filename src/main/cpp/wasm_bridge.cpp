@@ -14,6 +14,17 @@ EM_JS(void, async_js, (), {
 });
 
 string wasm_bridge::get_hello() {
+
+  try {
+
+      // call asynchronous js
+      //async_js();
+    //throw 5;
+    //callback(string("hello!"));
+  } catch (...) {
+    cout << "SUCCESS!! ERROR CAUGHT!" << endl;
+  }
+
   return string("Hello from WASM!");
 }
 

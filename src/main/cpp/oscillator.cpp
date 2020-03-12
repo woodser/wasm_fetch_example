@@ -13,9 +13,10 @@ std::vector<int> returnVectorData () {
 std::map<int, std::string> returnMapData () {
 
   try {
+      std::cout << "throwing something..." << std::endl;
       throw 5;
-  } catch (...) {
-      std::cout << "SUCCESSFULLY CAUGHT ERROR!!!" << std::endl;
+  } catch(...) {
+      std::cout << "WASM BRIDGE CAUGHT AN ERROR!!!!!!!" << std::endl;
   }
 
   std::map<int, std::string> m;

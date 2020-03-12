@@ -12,7 +12,7 @@ class WasmApp {
    */
   async loadWasmModule() {
     if (WasmApp.WASM_MODULE) return WasmApp.WASM_MODULE;
-    let oscillator = require("../../../dist/oscillator")();
+    let oscillator = require("../../../dist/wasm_app")();
     return new Promise(function(resolve, reject) {
       oscillator.then(resp => {
         delete resp.then; // de-promisify
@@ -31,6 +31,9 @@ class WasmApp {
     console.log("Getting module");
     let Module = await this.loadWasmModule();
     console.log("Done getting module!");
+    
+//    let hello = Module['get_hello']();
+//    console.log("Retrieved msg: " + hello);
     
     //let Module = WasmApp.WASM_MODULE;
     
