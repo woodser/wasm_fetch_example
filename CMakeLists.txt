@@ -7,7 +7,7 @@ project(wasm-app)
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 --bind -s DISABLE_EXCEPTION_CATCHING=2 -s EXCEPTION_CATCHING_WHITELIST='[\"_ZN11wasm_bridge26invoke_async_js_then_errorEN10emscripten3valE\",\"stringToUTF8\"]'")
 
 # read exception whitelist from file
-file(READ exceptions_whitelist.txt EXCEPTION_CATCHING_WHITELIST_FILE)
+file(READ wasm_exception_whitelist.txt EXCEPTION_CATCHING_WHITELIST_FILE)
 
 # build with exception white list
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 --bind -s DISABLE_EXCEPTION_CATCHING=2 -s EXCEPTION_CATCHING_WHITELIST=${EXCEPTION_CATCHING_WHITELIST_FILE}")
