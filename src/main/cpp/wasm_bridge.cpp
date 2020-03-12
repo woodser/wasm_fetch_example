@@ -20,14 +20,14 @@ string wasm_bridge::get_hello() {
 void wasm_bridge::invoke_async_js_then_error(emscripten::val callback) {
 
   // call asynchronous js
-  async_js();
+//  async_js();
 
   // suppose an error happens after
   try {
     throw runtime_error(string("Catch this!")); // <-- HOW TO CATCH OR RECOVER FROM THIS?
     //callback(string("hello!"));
   } catch (...) {
-    cout << "Error occurred!" << endl;
+    cout << "SUCCESS Error occurred!" << endl;
     callback(string("Callback payload after error"));
   }
 }
