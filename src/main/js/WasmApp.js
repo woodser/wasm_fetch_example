@@ -7,34 +7,20 @@ class WasmApp {
     
   }
   
-//  /**
-//   * Load the web assembly module.
-//   */
-//  async loadWasmModule() {
-//    
-//    // use cache if suitable, core module supersedes keys module because it is superset
-//    if (WasmApp.WASM_MODULE) return WasmApp.WASM_MODULE;
-//    
-//    // load module
-////    const assert = require("assert");
-//    WasmApp.WASM_MODULE = await require("../../../dist/index")().ready;
-//    return WasmApp.WASM_MODULE;
-//    //throw new Error("Not implemented!");
-//  }
-//  
-////  /**
-////   * Load the web assembly module.
-////   */
-////  async loadWasmModule2() {
-////    
-////    // use cache if suitable, core module supersedes keys module because it is superset
-////    if (WasmApp.WASM_MODULE) return WasmApp.WASM_MODULE;
-////    
-////    // load module
-////    WasmApp.WASM_MODULE = await require("../../../web_app/index")().ready;
-////    return WasmApp.WASM_MODULE;
-////  }
-//  
+  /**
+   * Load the web assembly module usng a cache.
+   */
+  async loadWasmModule() {
+    if (WasmApp.WASM_MODULE) return WasmApp.WASM_MODULE;
+    let oscillator = require("../../../dist/oscillator")();
+    return new Promise(function(resolve, reject) {
+      oscillator.then(resp => {
+        delete resp.then; // de-promisify
+        resolve(resp);
+      });
+    });
+  }
+  
   /**
    * Returns a message from the WASM module.
    * 
@@ -42,83 +28,52 @@ class WasmApp {
    */
   async getHello() {
     
-    return new Promise(function(resolve, reject) {
-      
-      // load module
-      const assert = require("assert");
-      console.log("Required assert...");
-      const oscillator = require("../../../dist/oscillator")();
-      console.log("Requred oscillator:");
-      oscillator.then(resp => {
-        let Module = oscillator;
-        
-        var retVector = Module['returnVectorData']();
+    console.log("Getting module");
+    let Module = await this.loadWasmModule();
+    console.log("Done getting module!");
+    
+    //let Module = WasmApp.WASM_MODULE;
+    
+    var retVector = Module['returnVectorData']();
 
-        // vector size
-        var vectorSize = retVector.size();
-       
-        // reset vector value
-        retVector.set(vectorSize - 1, 11);
-       
-        // push value into vector
-        retVector.push_back(12);
-       
-        // retrieve value from the vector
-        for (var i = 0; i < retVector.size(); i++) {
-            console.log("Vector Value: ", retVector.get(i));
-        }
-       
-        // expand vector size
-        retVector.resize(20, 1);
-       
-        var retMap = Module['returnMapData']();
-       
-        // map size
-        var mapSize = retMap.size();
-       
-        // retrieve value from map
-        console.log("Map Value: ", retMap.get(10));
-       
-        // figure out which map keys are available
-        // NB! You must call `register_vector<key_type>`
-        // to make vectors available
-        var mapKeys = retMap.keys();
-        for (var i = 0; i < mapKeys.size(); i++) {
-            var key = mapKeys.get(i);
-            console.log("Map key/value: ", key, retMap.get(key));
-        }
-       
-        // reset the value at the given index position
-        retMap.set(10, "OtherValue");
-        
-        resolve("Hello!");
-      })
-    });
+    // vector size
+    var vectorSize = retVector.size();
+   
+    // reset vector value
+    retVector.set(vectorSize - 1, 11);
+   
+    // push value into vector
+    retVector.push_back(12);
+   
+    // retrieve value from the vector
+    for (var i = 0; i < retVector.size(); i++) {
+        console.log("Vector Value: ", retVector.get(i));
+    }
+   
+    // expand vector size
+    retVector.resize(20, 1);
+   
+    var retMap = Module['returnMapData']();
+   
+    // map size
+    var mapSize = retMap.size();
+   
+    // retrieve value from map
+    console.log("Map Value: ", retMap.get(10));
+   
+    // figure out which map keys are available
+    // NB! You must call `register_vector<key_type>`
+    // to make vectors available
+    var mapKeys = retMap.keys();
+    for (var i = 0; i < mapKeys.size(); i++) {
+        var key = mapKeys.get(i);
+        console.log("Map key/value: ", key, retMap.get(key));
+    }
+   
+    // reset the value at the given index position
+    retMap.set(10, "OtherValue");
     
-
-    
-//    console.log(await oscillator.then());
-//    console.log("OK?!?!");
-//    console.log(oscillator.onRuntimeInitialized);
-//    let Module = oscillator
-//    //let Module = await require("../../../dist/oscillator")().then;
-//    console.log("Fetched module!");
-//    console.log(Module);
-    
-//    const fs = require('fs');
-//    let source = fs.readFileSync('../../../dist/oscillator.wasm');
-//    let typedArray = new Uint8Array(source);
-    
-//    WebAssembly.instantiateStreaming(typedArray, importObject)
-//    .then(results => {
-//      console.log("WebAssembly module loaded!!!")
-//      // Do something with the results!
-//    });
-    
-//    //const fetch = require("fetch");
-//    const fetch = require("node-fetch");
-//    const fetchPromise = fetch('../../../dist/oscillator');
-//    const { Module } = await WebAssembly.instantiateStreaming(fetchPromise);
+    return "Hello!";
   }
   
 //  /**
