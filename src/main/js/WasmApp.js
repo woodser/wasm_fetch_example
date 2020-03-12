@@ -31,6 +31,7 @@ class WasmApp {
     console.log("Getting module");
     let Module = await this.loadWasmModule();
     console.log("Done getting module!");
+    console.log(Module);
     
 //    let hello = Module['get_hello']();
 //    console.log("Retrieved msg: " + hello);
